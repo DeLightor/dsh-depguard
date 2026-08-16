@@ -1,0 +1,7 @@
+# dsh-depguard bundle patch: mount the depguard plugin into the profile layer stack.
+# The plugin registers two read-only model tools:
+#   - dsh_depguard_predict  (pre-install conflict prediction from a manifest)
+#   - dsh_depguard_check    (post-install duplicate/drift/vendored scan)
+- insert:
+    - id: depguard
+      name: 'dsh-depguard'

@@ -1,0 +1,7 @@
+{
+  "name": "bad-plugin",
+  "version": "1.0.0",
+  "dependencies": {
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  }
+}

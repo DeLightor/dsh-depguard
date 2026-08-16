@@ -1,0 +1,12 @@
+node_modules/
+*.log
+.DS_Store
+
+# fixtures 里的假 node_modules 目录是测试场景的一部分，必须入库
+!tests/fixtures/**/
+!tests/fixtures/**/node_modules/
+!tests/fixtures/**/node_modules/**/
+!tests/fixtures/**/package.json
+
+# symlink fixture 由测试运行时构造（含真实符号链接），不预先入库
+tests/fixtures/symlink/
