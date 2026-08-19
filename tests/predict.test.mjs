@@ -27,6 +27,17 @@ test('predict: 本地目录 manifest（dependencies 带核心包 → NOT_RECOMME
   assert.ok(result.prediction.some((p) => p.check === 'vendored-service' && p.risk === 'critical'))
 })
 
+test('predict: Windows 盘符绝对路径（F:\\ 或 F:/）按本地目录处理，不再误判为 npm 包名', { skip: process.platform !== 'win32' }, async () => {
+  // join() 在 win32 上产出的就是盘符绝对路径；修复前会落入 else 分支走
+  // fetchNpmManifest，把 "F:\\...\\fixtures\\bad-plugin-manifest" 当包名查 registry。
+  const result = await predict({
+    target: join(here, 'fixtures', 'bad-plugin-manifest'),
+    root: join(here, 'fixtures', 'clean'),
+  })
+  assert.equal(result.verdict, 'NOT_RECOMMENDED')
+  assert.equal(result.error, undefined)
+})
+
 test('predict: github: 前缀剥除（slice 字符串参数会变 NaN → 前缀剥不掉的历史 bug）', async () => {
   // 直接验证内部函数收到剥掉前缀的 ownerRepo
   const { fetchGithubManifest } = await import('../lib/engine/predict.js')
